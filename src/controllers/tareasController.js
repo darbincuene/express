@@ -2,8 +2,8 @@ import Tarea from "../models/tareasModels.js";
 
 export const crearTarea=async(req,res)=>{
     try{
-        const {titulo, descripcion}= req.body;
-        const nuevaTarea= new Tarea({titulo,descripcion});
+        const {titulo, descripcion,estado}= req.body;
+        const nuevaTarea= new Tarea({titulo,descripcion,estado});
         await nuevaTarea.save();
         res.status(201).json({message:'Tarea creada correctamente'});
     } catch(error){

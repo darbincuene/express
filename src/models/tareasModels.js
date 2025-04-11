@@ -8,9 +8,9 @@ const tareasshema= new mongoose.Schema({
     descripcion:{
         type:String,
     },
-    completada:{
+    estado:{
         type:Boolean,
-        default:false,
+        default:false
     },
     fechaCreacion:{
         type:Date,
