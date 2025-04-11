@@ -8,7 +8,7 @@ const tareasshema= new mongoose.Schema({
     descripcion:{
         type:String,
     },
-    estado:{
+    completada:{
         type:Boolean,
         default:false
     },
