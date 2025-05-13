@@ -5,13 +5,17 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 const app=  express();
+
 const PORT=12345;
 
 connectDB();
 
 dotenv.config();
+app.use('/uploads', express.static('uploads'));
 app.use(cors({}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(router);
 
 
