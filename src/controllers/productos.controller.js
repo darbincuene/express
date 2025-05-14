@@ -49,37 +49,30 @@ export const eliminarProducto = async (req, res) => {
     }
 }
 
-export const actualizarProducto = async (req, res) => {
 
+export const actualizarProducto = async (req, res) => {
     try {
         const { _id } = req.params;
-        console.log(_id);
-        const { nombre_producto, descripcion, precio } = req.body;
 
-        const imagen_url = req.file ? `uploads/${req.file.filename}` : undefined;
+        // Solo los campos que vengan en req.body se actualizan
+        const datos = { ...req.body };
 
-       
-        const datosactualizados={
-            nombre_producto,
-            descripcion,precio:Number(precio)
+        // Si hay imagen, se añade
+        if (req.file) {
+            datos.imagen_url = `uploads/${req.file.filename}`;
         }
 
-        if(imagen_url){
-            datosactualizados.imagen_url=imagen_url;
+        // Actualiza solo los campos presentes
+        const producto = await ProductosShema.findByIdAndUpdate(_id, datos, { new: true });
+
+        if (!producto) {
+            return res.status(404).json({ message: 'producto no encontrado' });
         }
 
-        const productoactualizado= await ProductosShema.findByIdAndUpdate(
-            {_id},
-            datosactualizados,
-            {new:true}
-        )
-
-        if(!productoactualizado){
-            return res.status(404).json({message:"producto no encontrado"})
-        }
-        res.status(200).json({ message: "producto actualizado correctamente", productoactualizado });
+        return res.json({ message: 'producto actualizado', producto });
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({ message: "error al actualizar el producto", error });
+        console.error(error);
+        return res.status(500).json({ message: 'error al actualizar', error });
     }
-}
+};
+

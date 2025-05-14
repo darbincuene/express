@@ -21,6 +21,7 @@ router.post("/login",Login)
 router.post('/productos',vericarToken,soloAdmin,upload.single('image'),crearProducto);
 router.get('/productos',obtenerProductos)
 router.delete('/productos/:_id', eliminarProducto);
-router.patch('/productos/:_id', upload.single('image'), actualizarProducto);
+// router.patch('/productos/:_id', upload.single('image'), actualizarProducto);
+router.patch('/productos/:_id',upload.single('image'),actualizarProducto)
 
 export {router}
